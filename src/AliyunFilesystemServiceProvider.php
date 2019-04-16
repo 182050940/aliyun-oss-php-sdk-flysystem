@@ -17,9 +17,9 @@ class AliyunFilesystemServiceProvider extends ServiceProvider
     public function boot()
     {
         Storage::extend('oss', function ($app,$config) {
-            $client = new OssClient($config['filesystem.disk.oss.ACCESS_ID'],$config['filesystem.disk..oss.ACCESS_KEY'], $config['filesystem.disk.oss.ENDPOINT']);
+            $client = new OssClient($config['filesystem.disk.oss.key'],$config['filesystem.disk.oss.secret'], $config['filesystem.disk.oss.endpoint']);
 
-            return new Filesystem(new AliyunOssAdapter($client, $config['filesystem.disk.oss.BUCKET']));
+            return new Filesystem(new AliyunOssAdapter($client, $config['filesystem.disk.oss.bucket']));
         });
     }
 
