@@ -8,7 +8,7 @@ Laravel 阿里云 OSS Flysystem 插件
 ## Installation 安装
 
 ```bash
-composer require westeteren/aliyun-oss-flysystem:dev-master
+composer require westeteren/aliyun-oss-flysystem
 ```
 
 ## Configuration 配置
