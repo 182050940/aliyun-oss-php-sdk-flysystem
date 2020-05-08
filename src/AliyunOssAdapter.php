@@ -476,16 +476,20 @@ class AliyunOssAdapter extends AbstractAdapter
      */
     public function getUrl($path)
     {
+        $endpoint = parse_url($this->options['endpoint']);
 
         if ($this->options['is_cname']) {
-            $domain = $this->options['oss_cname'];
+            $domain = isset($endpoint['host']) ? $endpoint['host'] : $endpoint['path'];
         } else {
-            $domain = $this->bucket.'.'.$this->options['endpoint'];
-        }
-        if (0 !== stripos($domain, 'https://') && 0 !== stripos($domain, 'http://')) {
-            $domain = "http://{$domain}";
+            $domain = $this->bucket . '.' . (isset($endpoint['host']) ? $endpoint['host'] : $endpoint['path']);
         }
 
-        return rtrim($domain, '/').'/'.ltrim($path, '/');
+        if (isset($endpoint['scheme'])) {
+            $domain = "{$endpoint['scheme']}://{$domain}";
+        } else {
+            $domain = "http://{$domain}";
+        }
+        
+        return rtrim($domain, '/') . '/' . ltrim($path, '/');
     }
 }

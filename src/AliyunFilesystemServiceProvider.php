@@ -17,11 +17,10 @@ class AliyunFilesystemServiceProvider extends ServiceProvider
     public function boot()
     {
         Storage::extend('oss', function ($app, $config) {
-            $client = new OssClient($config['key'], $config['secret'], $config['endpoint'], $config['is_cname']);
+            $client = new OssClient($config['key'], $config['secret'], $config['endpoint'], $config['is_cname'], $config['security_token']);
 
             return new Filesystem(new AliyunOssAdapter($client, $config['bucket'], null, [
                 'is_cname' => $config['is_cname'],
-                'oss_cname' => $config['url'],
                 'endpoint' => $config['endpoint']]));
         });
     }
